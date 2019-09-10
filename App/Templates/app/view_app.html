@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback:{{APP_INFO.name}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no”">
+    <meta name="theme-color" content="#0072ff" />
+    <link href="{{BASE_URL}}/cff/resources/bootstrap4.1.1.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="{{BASE_URL}}/cff/style.css" rel="stylesheet" id="bootstrap-css">
+    <script src="{{BASE_URL}}/cff/resources/jquery3.2.1.min.js"></script>
+    <script src="{{BASE_URL}}/cff/resources/bootstrap4.1.1.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+    	$(document).ready( function () {
+		    $('#dtTable').DataTable();
+		} );
+    </script>
+
+    <style type="text/css">
+    	input[type=checkbox] {
+		    transform: scale(2.5);
+		}
+    </style>
+
+</head>
+<body id="app">
+    <div id="xbg"></div>
+
+   
+
+    <div class="xcontainer">
+        <div class="container xcontact-form">
+            <!--<div class="contact-image" style="text-align: center;margin:30px;">
+                <!--https://image.ibb.co/kUagtU/rocket_contact.png->
+                <img src="bg2.jpg" alt="xrocket_contact" class="rounded"/>
+            </div>-->
+            <xform>
+                
+                <div style="margin-top: 4%;">
+                  
+                   <table width="100%">
+                   		
+                       <tr>
+                           <td>
+                              <h3 style="color:white;font-size: 1.5em;">Feedbacks: {{APP_INFO.name}}
+                        
+                                </h3>  
+                           </td>
+                           <td align="right">
+                           		<a href="/administration"><span style="color:white;" class="badge">Dashboard</span></a>
+                               <a href="/help"><span style="color:white;" class="badge">Help</span></a>
+                               &nbsp;&nbsp;&nbsp;
+                               <a href="/logout"><span style="color:white;" class="badge">Logout</span></a>
+                           </td>
+                       </tr>
+                       <tr style="color:white;">
+                       		<td colspan="2">
+                       			From: <input type="date" name="">
+                       			&nbsp;
+                       			To: <input type="date" name="">
+                       			&nbsp;
+                       			&nbsp;
+                       			<button class="btn btn-sm btn-default">Search</button>
+                       			&nbsp;
+                       			<button class="btn btn-sm btn-success">Report</button>
+                       		</td>
+                       </tr>
+                   </table>
+                   <br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    	<div class="table-responsive">
+                    		<table id="dtTable" class="table table-striped table-sm" style="background-color: white;color:gray;">
+                    		<thead style="color: white;background-color: gray;">
+                    			<tr>
+                    				
+	                    			<td>
+	                    				Date
+	                    			</td>
+	                    			<td>
+	                    				Stars
+	                    			</td>
+	                    			<td>
+	                    				Username
+	                    			</td>
+	                    			<td>
+	                    				Phone
+	                    			</td>
+	                    			<td>
+	                    				Email
+	                    			</td>
+	                    			<td>
+	                    				Comment
+	                    			</td>
+	                    		</tr>
+                    		</thead>
+                    		
+
+                    		<tbody>
+                    			<tr v-repeat="comment in COMMENTS_LIST">
+                    				
+                    				<td>
+                    					<span>{{"{{"}} comment.created_at {{"}}"}}</span>
+                    				</td>
+                    				<td>
+                    					<span v-repeat="star in comment.star_value">
+                    						<span style="color:orange;">★</span>
+                    					</span>
+
+                    				</td>
+                    				<td>
+                    					<span>{{"{{"}} comment.username {{"}}"}}</span>
+                    				</td>
+                    				<td>
+                    					<span>{{"{{"}} comment.phone {{"}}"}}</span>
+                    				</td>
+                    				<td>
+                    					<span>{{"{{"}} comment.email {{"}}"}}</span>
+                    				</td>
+                    				<td>
+                    					<span>{{"{{"}} comment.comment {{"}}"}}</span>
+                    				</td>
+                    				<!--<td>{{"{{"}} app.name {{"}}"}}</td>
+                    				<td>{{"{{"}} app.app_id {{"}}"}}</td>
+                    				<td>
+                    					<a href ='/administration/{{"{{"}}app.app_id {{"}}"}}' class="btn btn-success">View</a>
+                    				</td>-->
+                    			</tr>
+                    		</tbody>
+                    		</table>
+                    	</div>
+                    </div>
+                </div>
+            </xform>
+        </div>
+
+    </div>
+
+
+</body>
+
+	<script type="text/javascript" src="{{BASE_URL}}/cff/js/vue.min.js"></script>
+	<script type="text/javascript" src="{{BASE_URL}}/cff/js/axios.min.js"></script>
+	
+
+	<script type="text/javascript">
+		var app_info = {
+			ACCOUNT : {{USER |raw }},
+			APPS_LIST : {{APP_LIST |raw }},
+			COMMENTS_LIST : {{COMMENTS|raw}}
+		};
+	</script>
+	<!--<script type="text/javascript" src="{{BASE_URL}}/cff/app.js"></script>-->
+	<script type="text/javascript">
+		var APP = new Vue({
+			el : '#app',
+			delimiters: ['${', '}'],
+			data : {
+				isLoading : false,
+				ACCOUNT_INFO : app_info.ACCOUNT,
+				APPS_LIST : app_info.APPS_LIST,
+				COMMENTS_LIST : app_info.COMMENTS_LIST
+			}, 
+			methods : {
+				openNewAccModal : function(){
+					jQuery("#newAccountModal").modal();
+				}
+			}
+		});
+	</script>
+
+</html>
+
+
+
+
+<!------ Include the above in your HEAD tag ---------->

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no”">
+    <meta name="theme-color" content="#0072ff" />
+    <link href="./cff/resources/bootstrap4.1.1.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="./cff/style.css" rel="stylesheet" id="bootstrap-css">
+    <script src="./cff/resources/jquery3.2.1.min.js"></script>
+    <script src="./cff/resources/bootstrap4.1.1.min.js"></script>
+
+    <style type="text/css">
+    	input[type=checkbox] {
+		    transform: scale(2.5);
+		}
+    </style>
+
+</head>
+<body id="app">
+    <div id="xbg"></div>
+
+   
+
+    <div class="xcontainer">
+        <div class="container xcontact-form">
+            <!--<div class="contact-image" style="text-align: center;margin:30px;">
+                <!--https://image.ibb.co/kUagtU/rocket_contact.png->
+                <img src="bg2.jpg" alt="xrocket_contact" class="rounded"/>
+            </div>-->
+            <xform>
+                
+                <div style="margin-top: 4%;">
+                  
+                   <table width="100%">
+                       <tr>
+                           <td>
+                              <h3 style="color:white;font-size: 1.5em;">App-Dashboard
+                        
+                                </h3>  
+                           </td>
+                           <td align="right">
+                               <a href="/help"><span style="color:white;" class="badge">Help</span></a>
+                               &nbsp;&nbsp;&nbsp;
+                               <a href="/logout"><span style="color:white;" class="badge">Logout</span></a>
+                           </td>
+                       </tr>
+                   </table>
+                   <br>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    	
+                    	<table class="table" style="background-color: white;color:gray;">
+                    		<thead style="color: white;background-color: gray;">
+                    			<tr>
+	                    			<td>
+	                    				App-Name
+	                    			</td>
+	                    			<td>
+	                    				Rates
+	                    			</td>
+	                    			<td>
+	                    				Action
+	                    			</td>
+	                    		</tr>
+                    		</thead>
+                    		
+
+                    		<tbody>
+                    			<tr v-repeat="app in APPS_LIST">
+                    				<td>{{"{{"}} app.name {{"}}"}}</td>
+                    				<td>{{"{{"}} app.app_id {{"}}"}}</td>
+                    				<td>
+                    					<a href ='/administration/{{"{{"}}app.app_id {{"}}"}}' class="btn btn-success">View</a>
+                    				</td>
+                    			</tr>
+                    		</tbody>
+                    	</table>
+                    </div>
+                </div>
+            </xform>
+        </div>
+
+    </div>
+
+
+</body>
+
+	<script type="text/javascript" src="./cff/js/vue.min.js"></script>
+	<script type="text/javascript" src="./cff/js/axios.min.js"></script>
+	
+
+	<script type="text/javascript">
+		var app_info = {
+			ACCOUNT : {{USER |raw }},
+			APPS_LIST : {{APP_LIST |raw }}
+		};
+	</script>
+	<!--<script type="text/javascript" src="./cff/app.js"></script>-->
+	<script type="text/javascript">
+		var APP = new Vue({
+			el : '#app',
+			delimiters: ['${', '}'],
+			data : {
+				isLoading : false,
+				ACCOUNT_INFO : app_info.ACCOUNT,
+				APPS_LIST : app_info.APPS_LIST
+			}, 
+			methods : {
+				openNewAccModal : function(){
+					jQuery("#newAccountModal").modal();
+				}
+			}
+		});
+	</script>
+
+</html>
+
+
+
+
+<!------ Include the above in your HEAD tag ---------->

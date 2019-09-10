@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no”">
+    <meta name="theme-color" content="#0072ff" />
+    <link href="./cff/resources/bootstrap4.1.1.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="./cff/style.css" rel="stylesheet" id="bootstrap-css">
+    <script src="./cff/resources/jquery3.2.1.min.js"></script>
+    <script src="./cff/resources/bootstrap4.1.1.min.js"></script>
+
+    <style type="text/css">
+    	input[type=checkbox] {
+		    transform: scale(2.5);
+		}
+    </style>
+
+</head>
+<body id="app">
+    <div id="xbg"></div>
+
+    <div v-if="!showFeedbackForm">
+    	<div class="container">
+    		<div style="margin-top: 10%;border-left: 7px solid orange;padding-left: 20px;">
+               <centerx><h3 style="color:white;font-size: 1.5em;">Thank you {{"{{"}} formData.username {{"}}"}} 
+                    
+               </h3><br></centerx>
+
+               <span style="color:white; font-size: 1.3em;">
+               		We see our customers as invited guests to a party, and we are the hosts. It's our job every day to make every important aspect of the customer experience a little bit better
+               </span>
+               <br>
+
+               <button v-on="click: goHome()" class="form-control" name="btnSubmit" class="xbtnContact" value="Send Message" style="font-size: 30px;width: 280px;background: orange;color:white;margin-top: 30px;" />
+			                            Home
+			                        	</button>
+            </div>
+
+
+    	</div>
+    </div>
+
+
+    <div v-if="showFeedbackForm" class="xcontainer">
+        <div class="container xcontact-form">
+            <!--<div class="contact-image" style="text-align: center;margin:30px;">
+                <!--https://image.ibb.co/kUagtU/rocket_contact.png->
+                <img src="bg2.jpg" alt="xrocket_contact" class="rounded"/>
+            </div>-->
+            <xform>
+                
+                <div style="margin-top: 4%;">
+                  
+                   <table width="100%">
+                       <tr>
+                           <td>
+                              <h3 style="color:white;font-size: 1.5em;">Drop Us Your Feedback 
+                        
+                                </h3>  
+                           </td>
+                           <td align="right">
+                               <a href="/administration"><span style="color:white;" class="badge">Administration</span></a>
+                               &nbsp;&nbsp;&nbsp;
+                               <a href="/login"><span style="color:white;" class="badge">Login</span></a>
+                           </td>
+                       </tr>
+                   </table>
+                   <br>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <input v-model="formData.username" type="text" name="txtName" class="form-control" placeholder="Name *" style="font-size: 30px;" />
+                        </div>
+                        <div class="form-group">
+                            <input v-model="formData.email" type="text" name="txtEmail" class="form-control" placeholder="Email *" style="font-size: 30px;"/>
+                        </div>
+                        <div class="form-group">
+                            <input v-model="formData.phone" type="text" name="txtPhone" class="form-control" placeholder="Phone No *" style="font-size: 30px;"/>
+                        </div>
+                       
+                        <div class="xform-group">
+                            <div class="rate" xstyle="background-color: white;">
+                                <input type="radio" class="custRate" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" class="custRate" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" class="custRate" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" class="custRate" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" class="custRate" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <textarea v-model="formData.comment" name="txtMsg" class="form-control" placeholder=" Message *" style="width: 100%; height: 150px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                        	<div class="form-group">&nbsp;&nbsp;
+                        		<input v-model="formData.share" type="checkbox" name="" style="height:10px;font-size:3em;">
+                        		&nbsp;&nbsp;&nbsp;
+                        		<span style="color:black;">Share my comment in social media</span>
+                        	</div>
+                        	<table>
+                        		<tr>
+                        			<td>
+                        				<button v-on="click: submitMyComment()" class="form-control" name="btnSubmit" class="xbtnContact" value="Send Message" style="font-size: 30px;width: 280px;background: orange;color:white;" />
+			                            Submit / Send
+			                        	</button>
+                        			</td>
+                        			<td style="padding-left: 10px;">
+                        				<div v-show="isLoading" style="width: 30px;height: 30px;" class="loader"></div>
+                        			</td>
+                        		</tr>
+                        	</table>
+                            
+                        	
+                        </div>
+                    </div>
+                </div>
+            </xform>
+        </div>
+
+    </div>
+
+
+</body>
+
+	<script type="text/javascript" src="./cff/js/vue.min.js"></script>
+	<script type="text/javascript" src="./cff/js/axios.min.js"></script>
+	
+
+	<script type="text/javascript">
+		var app_info = {
+			APP_ID : '{{APP_ID}}',
+			ACC_ID : '{{ACCOUNT_ID}}',
+            REF_CODE : '{{REF_CODE}}'
+		};
+	</script>
+	<script type="text/javascript" src="./cff/app.js"></script>
+
+</html>
+
+
+
+
+<!------ Include the above in your HEAD tag ---------->
